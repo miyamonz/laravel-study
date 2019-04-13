@@ -13,7 +13,7 @@ services:
       build:
         context: ./workspace
         args:
-          - LARADOCK_PHP_VERSION=${PHP_VERSION}
+          - LARADOCK_PHP_VERSION=7.3
           - NPM_REGISTRY=${WORKSPACE_NPM_REGISTRY}
           - COMPOSER_GLOBAL_INSTALL=${WORKSPACE_COMPOSER_GLOBAL_INSTALL}
           - COMPOSER_AUTH=${WORKSPACE_COMPOSER_AUTH}
@@ -65,9 +65,9 @@ services:
       build:
         context: ./php-fpm
         args:
-          - LARADOCK_PHP_VERSION=${PHP_VERSION}
+          - LARADOCK_PHP_VERSION=7.3
       volumes:
-        - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+        - ./php-fpm/php$7.3.ini:/usr/local/etc/php/php.ini
         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}${APP_CODE_CONTAINER_FLAG}
       expose:
         - "9000"
@@ -75,8 +75,6 @@ services:
         - "dockerhost:${DOCKER_HOST_IP}"
       environment:
         - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
-        # - DOCKER_HOST=tcp://docker-in-docker:2375
-        # - FAKETIME=${PHP_FPM_FAKETIME}
       depends_on:
         - workspace
       networks:
@@ -89,7 +87,7 @@ services:
       build:
         context: ./mysql
         args:
-          - MYSQL_VERSION=${MYSQL_VERSION}
+          - MYSQL_VERSION=8.0
       environment:
         - MYSQL_DATABASE=${MYSQL_DATABASE}
         - MYSQL_USER=${MYSQL_USER}
